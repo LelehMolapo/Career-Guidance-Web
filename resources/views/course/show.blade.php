@@ -107,6 +107,9 @@
                 <p class="text-lg">
                  To apply for fo this course, you have to pass at {{$course->pass}} subjects that in include {{$course->passed_subject}}. The applicant is also required to have credits in these subjects <span class="text-red-500/50">{{$course->credits}}</span>.   
                 </p>
+                <p class="text-lg">
+                  {{$course->requirements}}</span>.   
+                </p>
                 
             </div>
         </div>

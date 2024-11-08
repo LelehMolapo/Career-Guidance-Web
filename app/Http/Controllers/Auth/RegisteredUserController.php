@@ -84,7 +84,7 @@ class RegisteredUserController extends Controller
                 "admissions" =>"close",
                 "institute_id"=>$insti->id
             ]);
-            dd('we good');
+            
         } elseif($register_as && $register_as === 'admin') {
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
