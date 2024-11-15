@@ -181,4 +181,9 @@
             </div>
         </div>
     </div>
+
+    <a href="{{ route('get-started') }}" style="padding: 1rem 2rem; border-radius: 2rem; background: linear-gradient(to right, #ff5733, #ffc300); color: white; font-weight: bold; font-size: 1.2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.2); text-decoration: none; transition: transform 0.3s ease-in-out;">
+    Get Started
+</a>
+
     </nav>

@@ -185,6 +185,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/ad/profile', function(){
         return view('admin.profile', ['user' =>Auth::user()]);
     })->name('edit');
+
+    Route::get('/get-started', function () {
+        return view('get-started');
+    })->name('get-started');
+    
+    Route::get('/register', function () {
+        return view('auth.register');
+    })->name('register');
 });
 
 require __DIR__.'/auth.php';

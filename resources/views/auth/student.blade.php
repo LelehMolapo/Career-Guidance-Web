@@ -1,9 +1,32 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Student Registration') }}
-        </h2>
-    </x-slot>
+<x-slot name="header">
+    <div style="display: flex; justify-content: center; align-items: center; padding: 1rem; background-color: #6a0dad; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); overflow: hidden;">
+        <h1 id="movingText" style="font-family: 'Arial', sans-serif; font-weight: 900; font-size: 3rem; color: white; text-transform: uppercase; letter-spacing: 4px; background: linear-gradient(to right, #6a0dad, #ff5733); -webkit-background-clip: text; background-clip: text; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); animation: blinkMove 3s linear infinite;">
+            PathToSuccess
+        </h1>
+    </div>
+</x-slot>
+
+<style>
+    @keyframes blinkMove {
+        0% {
+            transform: translateX(-100%);
+            color: #6a0dad;
+        }
+        50% {
+            transform: translateX(50%);
+            color: #ff5733;
+        }
+        100% {
+            transform: translateX(100%);
+            color: #6a0dad;
+        }
+    }
+
+    #movingText {
+        animation: blinkMove 3s linear infinite;
+    }
+</style>
     <x-guest>
         <form method="POST" action="{{ route('register') }}">
             @csrf
@@ -61,7 +84,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
+                    {{ __('Got An Account?') }}
                 </a>
 
                 <x-primary-button class="ms-4">

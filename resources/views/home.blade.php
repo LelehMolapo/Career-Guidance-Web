@@ -1,47 +1,57 @@
-<x-app-layout x-data="{open:false}">
-    <x-slot name="header">
-        <div class="flex justify-between align-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Home') }}
-            </h2>
-        </div>
-    </x-slot>
-    <div class="py-12">
-        <img src="Graduation-Party.jpg" alt="" class="-z-10 fixed w-full h-full top-0 right-0 left-0 bottom-0">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-800/50 overflow-hidden shadow-sm sm:rounded-lg p-8 text-white">
-                <div class="w-full flex flex-col items-center gap-6 justify-center">
-                    <h1 class="font-bold text-4xl text-center text-transparent bg-clip-text bg-gradient-to-r from-[#ff00d2] to-[#fed90f]">Find Your Path to Success</h1> 
-                    <p class="text-center">Explore higher learnings and apply to the best courses that match your qualifications</p> 
-                    <div class="flex flex-col items-center">
-                        <a href="/institute/register">
-                        <x-primary-button class="flex items-center justify-center  hover:bg-gray-300 w-[fit-content] bg-gradient-to-r from-[#ff00d2] via-red-800 to-yellow-200 py-[1.5px] px-[1.5px]">
-                            <div class="hover:bg-gray-500 transition-color duration-300 flex items-center justify-center bg-gray-900 h-full w-full px-3 py-2 rounded-sm">
-                             Get Started as institution    
-                            </div>
-                        </x-primary-button>  
-                        </a>
-                        <div class="flex w-[150px] items-center my-2 gap-1">
-                            <hr class="flex-1">  
-                            <span class="font-bold">OR</span>  
-                            <hr class="flex-1">  
-                        </div>
-                            
-                        <a href="/student/register">
-                            <x-primary-button class="flex items-center justify-center w-[fit-content] bg-gradient-to-r from-[#008cff]  to-[#e100ff] py-[1.5px] px-[1.5px] overflow-hidden">
-                            <div class="hover:bg-gradient-to-r from-[#008cff]  to-pink-500 hover:text-gray-200 transition-color duration-300 flex items-center justify-center bg-gray-900 h-full w-full px-3 py-2 rounded-sm">
-                              Get Started as student   
-                            </div>
-                        </x-primary-button> 
-                         
-                        </a>  
-                    </div>
-                    
-                    
-                </div>
-                
-            </div>
-        </div>
-        
+<x-app-layout x-data="{ open: false }">
+<x-slot name="header">
+    <div style="display: flex; justify-content: center; align-items: center; padding: 1rem; background-color: #6a0dad; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); overflow: hidden;">
+        <h1 id="movingText" style="font-family: 'Arial', sans-serif; font-weight: 900; font-size: 3rem; color: white; text-transform: uppercase; letter-spacing: 4px; background: linear-gradient(to right, #6a0dad, #ff5733); -webkit-background-clip: text; background-clip: text; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); animation: blinkMove 3s linear infinite;">
+            PathToSuccess
+        </h1>
     </div>
+</x-slot>
+
+<style>
+    @keyframes blinkMove {
+        0% {
+            transform: translateX(-100%);
+            color: #6a0dad;
+        }
+        50% {
+            transform: translateX(50%);
+            color: #ff5733;
+        }
+        100% {
+            transform: translateX(100%);
+            color: #6a0dad;
+        }
+    }
+
+    #movingText {
+        animation: blinkMove 3s linear infinite;
+    }
+</style>
+
+<div style="position: relative; padding: 3rem 0; background: linear-gradient(to bottom right, #e3ffe7, #d9e7ff, #ffe3ff); min-height: 100vh;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;">
+        <img src="{{ asset('Graduation-Party.jpeg') }}" alt="Graduation Party" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
+    </div>
+
+    <div style="position: relative; max-width: 64rem; margin: 0 auto; padding: 4rem; background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-radius: 1rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; z-index: 1;">
+        <h1 style="font-size: 3.5rem; font-weight: 800; font-style: italic; color: #6a0dad; line-height: 1.2; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
+            Welcome to Your Next Chapter!
+        </h1>
+
+        <p style="font-size: 1rem; font-style: italic; color: #718096; width: 70%; margin: 2rem auto; line-height: 1.5;">
+            Step into a world of endless possibilities. Explore, learn, and unlock your full potential.
+        </p>
+
+        <!-- Replace buttons with the Graduation-Party image -->
+        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem;">
+            <img src="{{ asset('Graduation-Party.jpeg') }}" alt="Graduation Party" style="width: 70%; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+        </div>
+    </div>
+
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, #1e1e2f, transparent); padding: 2rem 0; text-align: center; color: white; z-index: 1;">
+        <p style="font-size: 1rem; font-weight: 600; font-style: italic;">
+            “The future belongs to those who believe in the beauty of their dreams.” – Eleanor Roosevelt
+        </p>
+    </div>
+</div>
 </x-app-layout>

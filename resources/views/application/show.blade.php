@@ -1,130 +1,274 @@
-<x-app-layout x-data="{open:false}">
+<x-app-layout x-data="{ open: false }">
     <x-slot name="header">
-        <div class="flex justify-between align-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __("Application for " . $application->student->full_name) }}
-            </h2>
-            <div>
-                @if ($status !== 'admitted')
-                    @can('institute')
-                        <form method="POST" action='{{"/applications/$application->id"}}'>
-                            @csrf
-                            @method("PATCH")
-                            <x-primary-button class="bg-green-500" name="action" value="admit">
-                                Admit
-                            </x-primary-button>
-                            <x-primary-button name="action" value="waitlist">Waitlist
-                            </x-primary-button>
-                            <x-danger-button name="action" value="reject">{{ __('Reject') }}
-                            </x-danger-button>
-                        </form>
-                    @endcan
-                @else
-                    @can('institute')
-                            <x-primary-button class="bg-green-500"  
-                                disabled>
-                                Admitted
-                            </x-primary-button> 
-                    @endcan
-                @endif
-                
-            </div>
+        <!-- Header Section with Gradient and Animation -->
+        <div style="display: flex; justify-content: center; align-items: center; padding: 1rem; background-color: #6a0dad; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <h1 id="movingText" style="font-family: 'Arial', sans-serif; font-weight: 900; font-size: 3rem; color: white; text-transform: uppercase; letter-spacing: 4px; background: linear-gradient(to right, #6a0dad, #ff5733); -webkit-background-clip: text; background-clip: text; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); animation: blinkMove 3s linear infinite;">
+                PathToSuccess
+            </h1>
         </div>
     </x-slot>
-    <div class="py-12 px-6">
-        <section
-            class="@container flex flex-col p-6 sm:p-6 bg-white dark:bg-gray-900/80 text-gray-900 dark:text-gray-100 rounded-lg default:col-span-full default:lg:col-span-6 default:row-span-1 dark:ring-1 dark:ring-gray-800 shadow-xl">
-            <div class="md:flex md:items-start md:justify-between md:gap-2">
-                <div class="min-w-0">
-                    <div
-                        class="inline-block rounded-full bg-gray-500 px-3 py-2 max-w-full text-lg font-bold leading-5 text-white truncate lg:text-base dark:bg-gray-500/20">
-                        <span class="hidden md:inline">
-                            Application Id: {{$application->id}}
-                        </span>
-                        <span class="md:hidden">
-                            Application Id:{{$application->id}}
-                        </span>
-                    </div>
-                </div>
 
-                <div class="hidden text-right shrink-0 md:block md:min-w-64 md:max-w-80">
-                    <div>
-                        <span
-                            class="inline-block rounded-full bg-gray-200 px-3 py-2 text-sm leading-5 text-gray-900 max-w-full truncate dark:bg-gray-800 dark:text-white">
-                            <span class="font-bold pr-1">Course:</span>
-                            {{$application->course->course_name}}
-                        </span>
+    <style>
+        @keyframes blinkMove {
+            0% {
+                transform: translateX(-100%);
+                color: #6a0dad;
+            }
+            50% {
+                transform: translateX(50%);
+                color: #ff5733;
+            }
+            100% {
+                transform: translateX(100%);
+                color: #6a0dad;
+            }
+        }
+
+        #movingText {
+            animation: blinkMove 3s linear infinite;
+        }
+
+        /* Body Styling */
+        .bg-gradient {
+            background: linear-gradient(to bottom, #ff5733, #6a0dad);
+            min-height: 100vh;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .section-header {
+            text-align: center;
+            font-size: 2rem;
+            text-transform: uppercase;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        /* Customizing the Form */
+        .faculty-form {
+            background: linear-gradient(to right, #6a0dad, #ff9800);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .faculty-form:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .faculty-form h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .faculty-form .input-label {
+            font-weight: bold;
+            color: #ff5733;
+        }
+
+        .faculty-form .text-input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .faculty-form .primary-button {
+            background-color: #6a0dad;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: none;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .faculty-form .primary-button:hover {
+            background-color: #ff5733;
+        }
+
+        /* Faculty Cards */
+        .faculty-card {
+            background: linear-gradient(to right, #6a0dad, #ff9800);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .faculty-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .faculty-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .faculty-card p {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #6a0dad;
+            color: white;
+        }
+
+        .table-row {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table-cell {
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        /* Application Table Custom Styles */
+        .application-table {
+            background-color: #fff;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .application-table caption {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .application-table tr:hover {
+            background-color: #f7f7f7;
+        }
+
+        .application-table th {
+            text-align: left;
+            color: #6a0dad;
+        }
+
+        .application-table td {
+            font-weight: normal;
+        }
+
+        /* Action Button Styling */
+        .action-button {
+            padding: 1rem 2rem;
+            background-color: #6a0dad;
+            color: white;
+            font-size: 1rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #ff5733;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .action-buttons button:disabled {
+            background-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <div class="py-12 bg-gradient">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-6">
+            <h2 class="font-medium text-white section-header">Application for {{ $application->student->full_name }}</h2>
+            
+            <!-- Faculty Form Section -->
+            <div class="faculty-form">
+                <form method="POST" action='{{ "/applications/$application->id" }}'>
+                    @csrf
+                    @method("PATCH")
+                    <div class="flex justify-between gap-4">
+                        @if ($status !== 'admitted')
+                            @can('institute')
+                                <x-primary-button class="bg-green-500 action-button" name="action" value="admit">Admit</x-primary-button>
+                                <x-primary-button name="action" value="waitlist" class="action-button">Waitlist</x-primary-button>
+                                <x-danger-button name="action" value="reject" class="action-button">{{ __('Reject') }}</x-danger-button>
+                            @endcan
+                        @else
+                            @can('institute')
+                                <x-primary-button class="bg-green-500 action-button" disabled>Admitted</x-primary-button>
+                            @endcan
+                        @endif
                     </div>
-                </div>
+                </form>
             </div>
-        </section>
-        <div class="max-w-7xl mx-auto mb-6 mt-3">
-            <h2 class="font-semibold pb-1 text-xl">Results</h2>
-            <div id="credits"
-                class="bg-white overflow-hidden shadow-sm max-[640px]:rounded-lg sm:rounded-lg p-8 flex gap-3 justify-between" >
-                <table class="w-[250px]">
-                    <caption class="font-bold">Passes</caption>
-                    <tr>
-                    <th class="text-sm font-bold text-left">
-                        Subject
-                    </th>
-                    <th class="text-sm font-bold text-center">
-                        Grade
-                    </th>
-                </tr>
-                @php
-for ($i = 0; $i < $application->course->pass; $i++) {
-    $f = "passed_subject_" . $i + 1;
-    $v = "passed_grade_" . $i + 1;
-    $d = $i % 2 === 0;
-    echo "<tr>
-                            <td class='w-[100px] text-left'>{$results->$f}</td>
-                            <td class='w-[100px] text-center'>{$results->$v}</td>
-                        </tr>
-                        ";
-}
-                @endphp
+
+            <!-- Application Details Section -->
+            <div class="application-table">
+                <h3 class="text-center font-semibold text-lg">Application Details</h3>
+                <table>
+                    <caption>Course and Student Information</caption>
+                    <tr class="table-row">
+                        <th class="table-cell">Application Id</th>
+                        <td class="table-cell">{{$application->id}}</td>
+                    </tr>
+                    <tr class="table-row">
+                        <th class="table-cell">Course</th>
+                        <td class="table-cell">{{$application->course->course_name}}</td>
+                    </tr>
+                    <tr class="table-row">
+                        <th class="table-cell">Status</th>
+                        <td class="table-cell">{{ ucfirst($status) }}</td>
+                    </tr>
                 </table>
-                <table class="w-[250px]">
-                    <caption class="font-bold">Credits</caption>
-                    <tr>
-                        <th class="text-sm font-bold text-left">
-                            Subject
-                        </th>
-                        <th class="text-sm font-bold text-center">
-                            Grade
-                        </th>
+            </div>
+
+            <!-- Results Table -->
+            <div class="application-table">
+                <h3 class="text-center font-semibold text-lg">Student Results</h3>
+                <table>
+                    <caption>Passes and Credits</caption>
+                    <tr class="table-row">
+                        <th class="table-cell">Subject</th>
+                        <th class="table-cell">Grade</th>
                     </tr>
                     @php
-for ($i = 0; $i < $application->course->credit_amount; $i++) {
-    $f = "passed_subject_" . $i + 1;
-    $v = "passed_grade_" . $i + 1;
-    $d = $i % 2 === 0;
-    echo "<tr>
-                                    <td class='w-[100px] text-left'>{$results->$f}</td>
-                                    <td class='w-[100px] text-center'>{$results->$v}</td>
-                                </tr>
-                                ";
-}
+                        for ($i = 0; $i < $application->course->subjects->count(); $i++) {
+                            $subject = $application->course->subjects[$i];
+                            $student_subject = $application->student->subjects->where('subject_id', $subject->id)->first();
                     @endphp
+                    <tr class="table-row">
+                        <td class="table-cell">{{ $subject->subject_name }}</td>
+                        <td class="table-cell">{{ $student_subject->pivot->grade ?? "N/A" }}</td>
+                    </tr>
+                    @endforeach
                 </table>
             </div>
+
         </div>
-        @if (session('status') === 'application-updated')
-            <x-confirm-modal :name="'update'" :content="'The student already admitted'">
-            </x-confirm-modal>
-        @endif
-        @if (session('status') === 'application-admitted')
-            <x-confirm-modal :name="'create'" :content="'The student admitted successfully'">
-            </x-confirm-modal>
-        @endif
-        @if (session('status') === 'application-waitlisted')
-            <x-confirm-modal :name="'create'" :content="'The student waitlisted successfully'">
-            </x-confirm-modal>
-        @endif
-        @if (session('status') === 'application-rejected')
-            <x-confirm-modal :name="'create'" :content="'The student rejected successfully'">
-            </x-confirm-modal>
-        @endif
     </div>
 </x-app-layout>
